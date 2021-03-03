@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/cognito-client" />
             <option value="$PROJECT_DIR$/demo-app" />
+            <option value="$PROJECT_DIR$/kosmos" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
