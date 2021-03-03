@@ -1,2 +1,3 @@
+include ':cognito-client'
 include ':demo-app'
 rootProject.name = "Kosmos"
