@@ -1,3 +1,6 @@
+<img alt="Kosmos the Ghost" src="https://user-images.githubusercontent.com/899569/109872251-c9740e00-7c31-11eb-8bab-f57163b43ff9.jpg" width="200">
+
+
 # kosmos
 
 Kosmos is a lightweight Android utility for authenticating your users via [Amazon Cognito](https://aws.amazon.com/cognito/).
