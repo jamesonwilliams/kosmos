@@ -1,4 +1,4 @@
-package org.nosemaj.kosmos
+package org.nosemaj.kosmos.demo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
