@@ -57,8 +57,7 @@ class Cognito(region: String = "us-east-1") {
         if (conn.responseCode < 200 || conn.responseCode > 399) {
             throw ResponseError(conn.responseCode, readStream(conn.errorStream))
         } else {
-            val response = JSONObject(readStream(conn.inputStream))
-            return response
+            return JSONObject(readStream(conn.inputStream))
         }
     }
 

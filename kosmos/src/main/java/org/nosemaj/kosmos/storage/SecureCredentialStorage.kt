@@ -25,7 +25,7 @@ class SecureCredentialStorage(context: Context) : CredentialStorage {
     )
 
     override fun clear() {
-        prefs.edit().clear().commit()
+        prefs.edit().clear().apply()
     }
 
     override fun isEmpty(): Boolean {
@@ -52,7 +52,7 @@ class SecureCredentialStorage(context: Context) : CredentialStorage {
         if (token != null) {
             store(REFRESH_TOKEN, token)
         } else {
-            prefs.edit().remove(REFRESH_TOKEN.name).commit()
+            prefs.edit().remove(REFRESH_TOKEN.name).apply()
         }
     }
 
@@ -87,13 +87,13 @@ class SecureCredentialStorage(context: Context) : CredentialStorage {
     private fun store(key: Key, value: String) {
         prefs.edit()
             .putString(key.name, value)
-            .commit()
+            .apply()
     }
 
     private fun store(key: Key, value: Long) {
         prefs.edit()
             .putLong(key.name, value)
-            .commit()
+            .apply()
     }
 
     private fun getString(key: Key): String {
