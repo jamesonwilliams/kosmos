@@ -24,17 +24,9 @@ class RegisterUser(
         )
         val response = cognito.signUp(request)
         return if (!response.userConfirmed) {
-            val details = response.codeDeliveryDetails
-            UnconfirmedRegistration(
-                deliveryMedium = details.deliveryMedium,
-                attributeName = details.attributeName,
-                destination = details.destination
-            )
+            UnconfirmedRegistration
         } else {
-            ConfirmedRegistration(
-                username = username,
-                userId = response.userSub,
-            )
+            ConfirmedRegistration
         }
     }
 }
