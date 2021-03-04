@@ -1,0 +1,10 @@
+{
+  "CodeDeliveryDetails": {
+    "AttributeName": "email",
+    "DeliveryMedium": "EMAIL",
+    "Destination": "jhwill@amazon.com"
+  },
+  "UserConfirmed": false,
+  "UserSub": "bf1fcb49-ce36-4ee9-99d9-f3223cd26794"
+}
+
