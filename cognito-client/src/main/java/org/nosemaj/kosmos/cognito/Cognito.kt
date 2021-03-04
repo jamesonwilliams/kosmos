@@ -1,6 +1,5 @@
 package org.nosemaj.kosmos.cognito
 
-import android.util.Log
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -59,7 +58,6 @@ class Cognito(region: String = "us-east-1") {
             throw ResponseError(conn.responseCode, readStream(conn.errorStream))
         } else {
             val response = JSONObject(readStream(conn.inputStream))
-            Log.i("Cognito", response.toString())
             return response
         }
     }

@@ -3,7 +3,6 @@ package org.nosemaj.kosmos.demo
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -55,9 +54,6 @@ class CredentialsStatusPage : AppCompatActivity() {
     }
 
     private fun displayTokens(session: ValidSession) {
-        Log.i("CredentialStatus", "ID token = ${session.idToken}")
-        Log.i("CredentialStatus", "Access token = ${session.accessToken}")
-
         view.accessToken.text = session.accessToken
         view.idToken.text = session.idToken
         view.tokenInfo.visibility = VISIBLE

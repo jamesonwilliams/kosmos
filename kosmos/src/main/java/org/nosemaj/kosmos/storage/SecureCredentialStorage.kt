@@ -1,7 +1,6 @@
 package org.nosemaj.kosmos.storage
 
 import android.content.Context
-import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKey.KeyScheme
@@ -70,7 +69,6 @@ class SecureCredentialStorage(context: Context) : CredentialStorage {
         val gracePeriod = TimeUnit.MINUTES.toSeconds(3)
         val expirationEpoch = prefs.getLong(EXPIRATION_EPOCH.name, 0)
         val safelyBeforeExpiration = max(0, expirationEpoch - gracePeriod)
-        Log.i("CredentialsStorage", "now() = ${now()}, but deadline = $safelyBeforeExpiration")
         return now() > safelyBeforeExpiration
     }
 
