@@ -19,11 +19,11 @@
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username_hint_text"
-        android:inputType="textNoSuggestions"
+        android:hint="@string/email_hint_text"
+        android:inputType="textEmailAddress"
         android:autofillHints="@string/email_hint_text" />
 
     <EditText
@@ -33,14 +33,6 @@
         android:hint="@string/password_hint_text"
         android:inputType="textPassword"
         android:autofillHints="@string/password_hint_text" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/email_hint_text"
-        android:inputType="textEmailAddress"
-        android:autofillHints="@string/email_hint_text" />
 
     <Button
         android:id="@+id/submit_button"

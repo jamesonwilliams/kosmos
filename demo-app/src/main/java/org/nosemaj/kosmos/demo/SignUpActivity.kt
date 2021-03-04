@@ -25,15 +25,14 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun submitSignIn() {
         lifecycleScope.launch {
-            val username = view.username.text.toString()
+            val email = view.email.text.toString()
             val password = view.password.text.toString()
-            val attributes = mapOf("email" to view.email.text.toString())
             val registration = withContext(Dispatchers.IO) {
-                auth.registerUser(username, password, attributes)
+                auth.registerUser(email, password, mapOf("email" to email))
             }
             when (registration) {
-                is ConfirmedRegistration -> goToSignIn(this@SignUpActivity, username)
-                is UnconfirmedRegistration -> goToConfirmSignUp(this@SignUpActivity, username)
+                is ConfirmedRegistration -> goToSignIn(this@SignUpActivity, email)
+                is UnconfirmedRegistration -> goToConfirmSignUp(this@SignUpActivity, email)
             }
         }
     }
