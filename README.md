@@ -4,17 +4,17 @@
 
 Kosmos is a lightweight Android library to authenticate your users with [Amazon Cognito](https://aws.amazon.com/cognito/).
 
-Amazon Cognito maps your app's user accounts to roles/policies in your AWS account. Registered users can then `signIn` using Cognito's [Secure Remote Password (SRP)](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) protocol. After signing in, [Cognito grants auth tokens](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html) which can be used to make authenticated requests to other Amazon services.
+Amazon Cognito maps your app's user accounts to roles/policies in your AWS account. Registered users can `signIn` to obtain [auth tokens](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html), useful for making authenticated requests to other Amazon services.
 
-Kosmos can help you to register new user accounts, and to authenticate existing users. Under the hood, Kosmos handles a number of details on your behalf, including Secure Remote Password (SRP) protocol, secure token storage, and token refreshes.
+Kosmos can help you to register new user accounts, and to authenticate existing accounts. Under the hood, Kosmos handles a number of details on your behalf, including [Secure Remote Password (SRP)](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) exchange, secure token storage, and token refreshes.
 
-Here are the steps to register a new user account:
-1. Collect email and password from user, and call `registerUser(...)`
-2. Amazon Cognito will send a verification email
-3. Collect the verification code in your UI, and call `confirmRegistration(...)`
+To register a new user:
+1. Collect email and password from user, and call `registerUser(...)`.
+2. Amazon Cognito will send a verification email to the user.
+3. Collect the verification code in your UI, and call `confirmRegistration(...)`.
 4. If the code matches, the user can proceed to sign in.
 
-Signing in is easier. Simply call `signIn(...)`. Once a user has signed in, you can access their credentials through `session()`. A `ValidSession` contains an OIDC ID token and an OAuth2 access token.
+To sign in, simply call `signIn(...)`. Once a user has signed in, they can access credentials through `session()`. A `ValidSession` contains an OIDC ID token and an OAuth2 access token.
 
 ## Demo App
 
