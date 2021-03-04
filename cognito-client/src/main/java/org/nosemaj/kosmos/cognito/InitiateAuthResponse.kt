@@ -12,39 +12,35 @@ data class InitiateAuthResponse(
     companion object {
         fun from(json: JSONObject): InitiateAuthResponse {
             val challengeParamJson = json.optJSONObject("ChallengeParameters")
-            val challengeParameters: Map<String, String>? = if (challengeParamJson != null) {
-                val map = mutableMapOf<String, String>()
-                for (key in challengeParamJson.keys()) {
-                    map[key] = challengeParamJson[key] as String
+            val challengeParameters: Map<String, String>? = when (challengeParamJson) {
+                null -> null
+                else -> {
+                    val map = mutableMapOf<String, String>()
+                    for (key in challengeParamJson.keys()) {
+                        map[key] = challengeParamJson[key] as String
+                    }
+                    map
                 }
-                map
-            } else {
-                null
             }
 
-            val authenticationResult = if (json.has("AuthenticationResult")) {
-                val authResultJson = json.getJSONObject("AuthenticationResult")
-                AuthenticationResult(
-                    accessToken = authResultJson.getString("AccessToken"),
-                    expiresIn = authResultJson.getInt("ExpiresIn"),
-                    idToken = authResultJson.getString("IdToken"),
-                    refreshToken = authResultJson.getString("RefreshToken"),
-                    tokenType = authResultJson.getString("TokenType")
-                )
-            } else {
-                null
-            }
-
-            val session = if (json.has("Session")) {
-                json.getString("Session")
-            } else {
-                null
+            val authenticationResult = when {
+                json.has("AuthenticationResult") -> {
+                    val authResultJson = json.getJSONObject("AuthenticationResult")
+                    AuthenticationResult(
+                        accessToken = authResultJson.getString("AccessToken"),
+                        expiresIn = authResultJson.getInt("ExpiresIn"),
+                        idToken = authResultJson.getString("IdToken"),
+                        refreshToken = authResultJson.maybeString("RefreshToken"),
+                        tokenType = authResultJson.getString("TokenType")
+                    )
+                }
+                else -> null
             }
 
             return InitiateAuthResponse(
-                challengeName = json.getString("ChallengeName"),
+                challengeName = json.maybeString("ChallengeName"),
                 challengeParameters = challengeParameters,
-                session = session,
+                session = json.maybeString("Session"),
                 authenticationResult = authenticationResult,
                 hasChallengeParameters = challengeParameters != null
             )

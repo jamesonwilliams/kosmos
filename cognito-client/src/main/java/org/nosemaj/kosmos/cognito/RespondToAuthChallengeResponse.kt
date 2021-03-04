@@ -9,12 +9,8 @@ data class RespondToAuthChallengeResponse(
     companion object {
         fun from(json: JSONObject): RespondToAuthChallengeResponse {
             val authResultJson = json.getJSONObject("AuthenticationResult")
-            val challengeName = if (json.has("ChallengeName")) {
-                json.getString("ChallengeName")
-            } else null
-
             return RespondToAuthChallengeResponse(
-                challengeName = challengeName,
+                challengeName = json.maybeString("ChallengeName"),
                 authenticationResult = AuthenticationResult(
                     accessToken = authResultJson.getString("AccessToken"),
                     expiresIn = authResultJson.getInt("ExpiresIn"),
