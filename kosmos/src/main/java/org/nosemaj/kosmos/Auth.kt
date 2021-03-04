@@ -1,15 +1,17 @@
 package org.nosemaj.kosmos
 
+import android.content.Context
 import org.nosemaj.kosmos.cognito.Cognito
 import org.nosemaj.kosmos.storage.CredentialStorage
+import org.nosemaj.kosmos.storage.SecureCredentialStorage
 
 class Auth(
+    context: Context,
     private val poolId: String,
     private val clientId: String,
     private val clientSecret: String,
-    private val credentialStorage: CredentialStorage,
-    region: String = "us-east-1",
-    private val cognito: Cognito = Cognito(region)
+    private val credentialStorage: CredentialStorage = SecureCredentialStorage(context),
+    private val cognito: Cognito = Cognito(poolId.substringBefore('_')),
 ) {
     fun signIn(username: String, password: String) {
         return SignIn(

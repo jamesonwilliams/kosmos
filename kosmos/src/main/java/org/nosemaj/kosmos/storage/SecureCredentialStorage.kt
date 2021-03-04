@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKey.KeyScheme
+import java.util.concurrent.TimeUnit
+import kotlin.math.max
 import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.ACCESS_TOKEN
 import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.EXPIRATION_EPOCH
 import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.ID_TOKEN
 import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.REFRESH_TOKEN
 import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.TOKEN_TYPE
-import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 class SecureCredentialStorage(context: Context) : CredentialStorage {
     private val masterKey = MasterKey.Builder(context, "kosmos")

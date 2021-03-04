@@ -10,9 +10,9 @@ import java.util.UUID
 import org.json.JSONObject
 import org.nosemaj.kosmos.cognito.SignUpResponse.Companion
 
-class Cognito(
-    private val endpoint: String = "https://cognito-idp.us-east-1.amazonaws.com"
-) {
+class Cognito(region: String = "us-east-1") {
+    private val endpoint = "https://cognito-idp.$region.amazonaws.com"
+
     fun confirmSignUp(request: ConfirmSignUpRequest) {
         post("ConfirmSignUp", request.asJson())
     }

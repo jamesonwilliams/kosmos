@@ -2,7 +2,6 @@ package org.nosemaj.kosmos.demo
 
 import android.app.Application
 import org.nosemaj.kosmos.Auth
-import org.nosemaj.kosmos.storage.SecureCredentialStorage
 
 class KosmosDemoApp : Application() {
     lateinit var auth: Auth
@@ -10,10 +9,10 @@ class KosmosDemoApp : Application() {
     override fun onCreate() {
         super.onCreate()
         auth = Auth(
-            poolId = "",
-            clientId = "",
-            clientSecret = "",
-            credentialStorage = SecureCredentialStorage(this)
+            context = this,
+            poolId = resources.getString(R.string.pool_id),
+            clientId = resources.getString(R.string.client_id),
+            clientSecret = resources.getString(R.string.client_secret)
         )
     }
 }
