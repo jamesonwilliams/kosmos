@@ -1,6 +1,8 @@
 package org.nosemaj.kosmos
 
 import android.content.Context
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.nosemaj.kosmos.cognito.Cognito
 import org.nosemaj.kosmos.storage.CredentialStorage
 import org.nosemaj.kosmos.storage.SecureCredentialStorage
@@ -13,8 +15,8 @@ class Auth(
     private val credentialStorage: CredentialStorage = SecureCredentialStorage(context),
     private val cognito: Cognito = Cognito(poolId.substringBefore('_')),
 ) {
-    fun signIn(username: String, password: String) {
-        return SignIn(
+    suspend fun signIn(username: String, password: String) = withContext(Dispatchers.IO) {
+        return@withContext SignIn(
             cognito,
             credentialStorage,
             clientId,
@@ -25,37 +27,34 @@ class Auth(
         ).execute()
     }
 
-    fun session(): Session {
-        return GetSession(credentialStorage, cognito, clientId, clientSecret)
-            .execute()
+    suspend fun session(): Session = withContext(Dispatchers.IO) {
+        return@withContext GetSession(
+            credentialStorage, cognito, clientId, clientSecret
+        ).execute()
     }
 
-    fun registerUser(
+    suspend fun registerUser(
         username: String,
         password: String,
         attributes: Map<String, String> = emptyMap()
-    ): Registration {
-        return RegisterUser(
-            cognito,
-            clientId,
-            clientSecret,
-            username,
-            password,
+    ): Registration = withContext(Dispatchers.IO) {
+        return@withContext RegisterUser(
+            cognito, clientId, clientSecret, username, password,
             attributes
         ).execute()
     }
 
-    fun confirmRegistration(username: String, confirmationCode: String) {
-        return ConfirmRegistration(
-            cognito,
-            clientId,
-            clientSecret,
-            username,
+    suspend fun confirmRegistration(
+        username: String,
+        confirmationCode: String
+    ) = withContext(Dispatchers.IO) {
+        return@withContext ConfirmRegistration(
+            cognito, clientId, clientSecret, username,
             confirmationCode
         ).execute()
     }
 
-    fun signOut() {
-        return SignOut(cognito, credentialStorage).execute()
+    suspend fun signOut() = withContext(Dispatchers.IO) {
+        return@withContext SignOut(cognito, credentialStorage).execute()
     }
 }
