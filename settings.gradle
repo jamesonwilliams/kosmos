@@ -1,3 +1,4 @@
+include ':ci-client'
 include ':kosmos'
 include ':cip-client'
 include ':demo-app'
