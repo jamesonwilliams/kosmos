@@ -2,13 +2,13 @@ package org.nosemaj.kosmos
 
 import org.nosemaj.kosmos.Session.InvalidSession
 import org.nosemaj.kosmos.Session.ValidSession
-import org.nosemaj.kosmos.cognito.Cognito
-import org.nosemaj.kosmos.cognito.InitiateAuthRequest
+import org.nosemaj.kosmos.cip.CipClient
+import org.nosemaj.kosmos.cip.InitiateAuthRequest
 import org.nosemaj.kosmos.storage.CredentialStorage
 
 internal class GetSession(
     private val credentialStorage: CredentialStorage,
-    private val cognito: Cognito,
+    private val cipClient: CipClient,
     private val clientId: String,
     private val clientSecret: String
 ) {
@@ -34,7 +34,7 @@ internal class GetSession(
             clientId = clientId,
             authParameters = parameters
         )
-        val response = cognito.initiateAuth(request)
+        val response = cipClient.initiateAuth(request)
         val authenticationResult = response.authenticationResult!!
         credentialStorage.clear()
         if (authenticationResult.refreshToken != null) {

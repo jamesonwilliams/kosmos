@@ -8,17 +8,17 @@ import java.util.Locale
 import java.util.TimeZone
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-import org.nosemaj.kosmos.cognito.AuthenticationResult
-import org.nosemaj.kosmos.cognito.Cognito
-import org.nosemaj.kosmos.cognito.InitiateAuthRequest
-import org.nosemaj.kosmos.cognito.InitiateAuthResponse
-import org.nosemaj.kosmos.cognito.RespondToAuthChallengeRequest
+import org.nosemaj.kosmos.cip.AuthenticationResult
+import org.nosemaj.kosmos.cip.CipClient
+import org.nosemaj.kosmos.cip.InitiateAuthRequest
+import org.nosemaj.kosmos.cip.InitiateAuthResponse
+import org.nosemaj.kosmos.cip.RespondToAuthChallengeRequest
 import org.nosemaj.kosmos.storage.CredentialStorage
 import org.nosemaj.kosmos.util.AuthenticationHelper
 import org.nosemaj.kosmos.util.SecretHash
 
 class SignIn(
-    private val cognito: Cognito,
+    private val cipClient: CipClient,
     private val credentialStorage: CredentialStorage,
     private val clientId: String,
     private val clientSecret: String,
@@ -30,7 +30,7 @@ class SignIn(
 
     fun execute() {
         @Suppress("UsePropertyAccessSyntax") // getA() is NOT "a"!!!!!!
-        val response = cognito.initiateAuth(
+        val response = cipClient.initiateAuth(
             InitiateAuthRequest(
                 clientId = clientId,
                 authFlow = "USER_SRP_AUTH",
@@ -76,7 +76,7 @@ class SignIn(
             ),
             session = initAuthResponse.session
         )
-        val responseToAuthChallenge = cognito.respondToAuthChallenge(request)
+        val responseToAuthChallenge = cipClient.respondToAuthChallenge(request)
         val authResult = responseToAuthChallenge.authenticationResult
         storeCredentials(authResult)
     }

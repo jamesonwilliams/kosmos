@@ -1,5 +1,6 @@
-package org.nosemaj.kosmos.cognito
+package org.nosemaj.kosmos.cip
 
+import android.util.Log
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -7,9 +8,10 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID
 import org.json.JSONObject
-import org.nosemaj.kosmos.cognito.SignUpResponse.Companion
+import org.nosemaj.kosmos.cip.SignUpResponse.Companion
 
-class Cognito(region: String = "us-east-1") {
+// CIP = Cognito Identity Provider
+class CipClient(region: String = "us-east-1") {
     private val endpoint = "https://cognito-idp.$region.amazonaws.com"
 
     fun confirmSignUp(request: ConfirmSignUpRequest) {
@@ -40,6 +42,7 @@ class Cognito(region: String = "us-east-1") {
 
     private fun post(action: String, json: JSONObject): JSONObject {
         val input = json.toString().toByteArray()
+        Log.i("REQUEST", json.toString(2))
 
         val url = URL(endpoint)
         val conn = url.openConnection() as HttpURLConnection
@@ -55,9 +58,13 @@ class Cognito(region: String = "us-east-1") {
         conn.outputStream.write(input, 0, input.size)
 
         if (conn.responseCode < 200 || conn.responseCode > 399) {
-            throw ResponseError(conn.responseCode, readStream(conn.errorStream))
+            val value = readStream(conn.errorStream)
+            Log.i("Error", value)
+            throw ResponseError(conn.responseCode, value)
         } else {
-            return JSONObject(readStream(conn.inputStream))
+            val foo = JSONObject(readStream(conn.inputStream))
+            Log.i("Response", foo.toString(2))
+            return foo
         }
     }
 

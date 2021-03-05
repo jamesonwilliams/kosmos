@@ -1,4 +1,4 @@
-package org.nosemaj.kosmos.cognito
+package org.nosemaj.kosmos.cip
 
 data class AuthenticationResult(
     val accessToken: String,

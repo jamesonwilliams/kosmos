@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    api project(':cognito-client')
+    api project(':cip-client')
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
 }

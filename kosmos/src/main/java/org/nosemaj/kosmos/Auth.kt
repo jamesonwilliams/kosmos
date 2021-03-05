@@ -3,7 +3,7 @@ package org.nosemaj.kosmos
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.nosemaj.kosmos.cognito.Cognito
+import org.nosemaj.kosmos.cip.CipClient
 import org.nosemaj.kosmos.storage.CredentialStorage
 import org.nosemaj.kosmos.storage.SecureCredentialStorage
 
@@ -13,11 +13,11 @@ class Auth(
     private val clientId: String,
     private val clientSecret: String,
     private val credentialStorage: CredentialStorage = SecureCredentialStorage(context),
-    private val cognito: Cognito = Cognito(poolId.substringBefore('_')),
+    private val cipClient: CipClient = CipClient(poolId.substringBefore('_')),
 ) {
     suspend fun signIn(username: String, password: String) = withContext(Dispatchers.IO) {
         return@withContext SignIn(
-            cognito,
+            cipClient,
             credentialStorage,
             clientId,
             clientSecret,
@@ -29,7 +29,7 @@ class Auth(
 
     suspend fun session(): Session = withContext(Dispatchers.IO) {
         return@withContext GetSession(
-            credentialStorage, cognito, clientId, clientSecret
+            credentialStorage, cipClient, clientId, clientSecret
         ).execute()
     }
 
@@ -39,7 +39,7 @@ class Auth(
         attributes: Map<String, String> = emptyMap()
     ): Registration = withContext(Dispatchers.IO) {
         return@withContext RegisterUser(
-            cognito, clientId, clientSecret, username, password,
+            cipClient, clientId, clientSecret, username, password,
             attributes
         ).execute()
     }
@@ -49,12 +49,12 @@ class Auth(
         confirmationCode: String
     ) = withContext(Dispatchers.IO) {
         return@withContext ConfirmRegistration(
-            cognito, clientId, clientSecret, username,
+            cipClient, clientId, clientSecret, username,
             confirmationCode
         ).execute()
     }
 
     suspend fun signOut() = withContext(Dispatchers.IO) {
-        return@withContext SignOut(cognito, credentialStorage).execute()
+        return@withContext SignOut(cipClient, credentialStorage).execute()
     }
 }

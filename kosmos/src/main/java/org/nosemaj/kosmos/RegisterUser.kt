@@ -2,12 +2,12 @@ package org.nosemaj.kosmos
 
 import org.nosemaj.kosmos.Registration.ConfirmedRegistration
 import org.nosemaj.kosmos.Registration.UnconfirmedRegistration
-import org.nosemaj.kosmos.cognito.Cognito
-import org.nosemaj.kosmos.cognito.SignUpRequest
+import org.nosemaj.kosmos.cip.CipClient
+import org.nosemaj.kosmos.cip.SignUpRequest
 import org.nosemaj.kosmos.util.SecretHash.Companion
 
 class RegisterUser(
-    private val cognito: Cognito,
+    private val cipClient: CipClient,
     private val clientId: String,
     private val clientSecret: String,
     private val username: String,
@@ -22,7 +22,7 @@ class RegisterUser(
             secretHash = Companion.of(username, clientId, clientSecret),
             userAttributes = attributes.map { Pair(it.key, it.value) }
         )
-        val response = cognito.signUp(request)
+        val response = cipClient.signUp(request)
         return if (!response.userConfirmed) {
             UnconfirmedRegistration
         } else {

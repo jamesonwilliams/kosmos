@@ -1,4 +1,4 @@
-package org.nosemaj.kosmos.cognito
+package org.nosemaj.kosmos.cip
 
 import org.json.JSONObject
 

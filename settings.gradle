@@ -1,4 +1,4 @@
 include ':kosmos'
-include ':cognito-client'
+include ':cip-client'
 include ':demo-app'
 rootProject.name = "Kosmos"

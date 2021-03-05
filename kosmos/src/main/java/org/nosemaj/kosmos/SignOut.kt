@@ -1,10 +1,10 @@
 package org.nosemaj.kosmos
 
-import org.nosemaj.kosmos.cognito.Cognito
+import org.nosemaj.kosmos.cip.CipClient
 import org.nosemaj.kosmos.storage.CredentialStorage
 
 class SignOut(
-    private val client: Cognito,
+    private val client: CipClient,
     private val credentialStorage: CredentialStorage
 ) {
     fun execute() {
