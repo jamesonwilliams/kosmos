@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.nosemaj.kosmos.Session.ValidSession
+import org.nosemaj.kosmos.Session.AuthenticatedSession
 import org.nosemaj.kosmos.demo.databinding.ActivityCredentialsStatusBinding
 
 class CredentialsStatusPage : AppCompatActivity() {
@@ -30,7 +30,7 @@ class CredentialsStatusPage : AppCompatActivity() {
     private fun signOut() {
         lifecycleScope.launch {
             auth.signOut()
-            view.tokenInfo.visibility = INVISIBLE
+            view.sessionInfo.visibility = INVISIBLE
             displayMessage("Signed out!")
         }
     }
@@ -38,7 +38,7 @@ class CredentialsStatusPage : AppCompatActivity() {
     private fun navigate() {
         lifecycleScope.launch(Dispatchers.IO) {
             when (val session = auth.session()) {
-                is ValidSession -> displayTokens(session)
+                is AuthenticatedSession -> displaySession(session)
                 else -> goToSignIn(source = this@CredentialsStatusPage)
             }
         }
@@ -53,10 +53,11 @@ class CredentialsStatusPage : AppCompatActivity() {
         }
     }
 
-    private fun displayTokens(session: ValidSession) {
-        view.accessToken.text = session.accessToken
-        view.idToken.text = session.idToken
-        view.tokenInfo.visibility = VISIBLE
+    private fun displaySession(session: AuthenticatedSession) {
+        view.accessKey.text = session.credentials.accessKeyId
+        view.secretKey.text = session.credentials.secretKey
+        view.sessionToken.text = session.credentials.sessionToken
+        view.sessionInfo.visibility = VISIBLE
     }
 }
 

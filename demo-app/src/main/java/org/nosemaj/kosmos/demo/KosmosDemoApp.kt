@@ -10,7 +10,8 @@ class KosmosDemoApp : Application() {
         super.onCreate()
         auth = Auth(
             context = this,
-            poolId = resources.getString(R.string.pool_id),
+            userPoolId = resources.getString(R.string.user_pool_id),
+            identityPoolId = resources.getString(R.string.identity_pool_id),
             clientId = resources.getString(R.string.client_id),
             clientSecret = resources.getString(R.string.client_secret)
         )

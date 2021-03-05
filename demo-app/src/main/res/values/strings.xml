@@ -8,8 +8,9 @@
     <string name="enter_code">Enter code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_in">Sign in</string>
-    <string name="access_token_label">Access token</string>
-    <string name="id_token">ID token</string>
+    <string name="secret_key_label">Secret Key</string>
+    <string name="access_key_label">Access Key</string>
+    <string name="session_token_label">Session Token</string>
     <string name="need_an_account_sign_up">Need an account? Sign up</string>
     <string name="sign_out">Sign out</string>
     <string name="empty" />

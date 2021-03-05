@@ -34,6 +34,7 @@ android {
 
 dependencies {
     api project(':cip-client')
+    api project(':ci-client')
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
 }

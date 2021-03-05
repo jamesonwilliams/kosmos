@@ -1,15 +1,15 @@
 package org.nosemaj.kosmos
 
 import org.nosemaj.kosmos.cip.CipClient
-import org.nosemaj.kosmos.storage.CredentialStorage
+import org.nosemaj.kosmos.storage.TokenStorage
 
 class SignOut(
     private val client: CipClient,
-    private val credentialStorage: CredentialStorage
+    private val tokenStorage: TokenStorage
 ) {
     fun execute() {
-        val accessToken = credentialStorage.accessToken()
-        credentialStorage.clear()
+        val accessToken = tokenStorage.accessToken()
+        tokenStorage.clear()
         client.globalSignOut(accessToken = accessToken)
     }
 }

@@ -19,7 +19,7 @@ data class GetCredentialsForIdentityResponse(
             return GetCredentialsForIdentityResponse(
                 json.getString("IdentityId"),
                 Credentials(
-                    credentials.getString("accessKeyId"),
+                    credentials.getString("AccessKeyId"),
                     credentials.getInt("Expiration"),
                     credentials.getString("SecretKey"),
                     credentials.getString("SessionToken")

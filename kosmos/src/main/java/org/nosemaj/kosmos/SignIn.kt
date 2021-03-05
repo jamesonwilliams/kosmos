@@ -13,13 +13,13 @@ import org.nosemaj.kosmos.cip.CipClient
 import org.nosemaj.kosmos.cip.InitiateAuthRequest
 import org.nosemaj.kosmos.cip.InitiateAuthResponse
 import org.nosemaj.kosmos.cip.RespondToAuthChallengeRequest
-import org.nosemaj.kosmos.storage.CredentialStorage
+import org.nosemaj.kosmos.storage.TokenStorage
 import org.nosemaj.kosmos.util.AuthenticationHelper
 import org.nosemaj.kosmos.util.SecretHash
 
 class SignIn(
     private val cipClient: CipClient,
-    private val credentialStorage: CredentialStorage,
+    private val tokenStorage: TokenStorage,
     private val clientId: String,
     private val clientSecret: String,
     private val poolId: String,
@@ -107,10 +107,10 @@ class SignIn(
     }
 
     private fun storeCredentials(authResult: AuthenticationResult) {
-        credentialStorage.accessToken(authResult.accessToken)
-        credentialStorage.idToken(authResult.idToken)
-        credentialStorage.refreshToken(authResult.refreshToken)
-        credentialStorage.expiresIn(authResult.expiresIn)
-        credentialStorage.tokenType(authResult.tokenType)
+        tokenStorage.accessToken(authResult.accessToken)
+        tokenStorage.idToken(authResult.idToken)
+        tokenStorage.refreshToken(authResult.refreshToken)
+        tokenStorage.expiresIn(authResult.expiresIn)
+        tokenStorage.tokenType(authResult.tokenType)
     }
 }

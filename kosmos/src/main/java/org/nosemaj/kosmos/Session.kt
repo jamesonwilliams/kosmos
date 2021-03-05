@@ -1,10 +1,15 @@
 package org.nosemaj.kosmos
 
-sealed class Session(val signedIn: Boolean) {
-    class InvalidSession : Session(false)
+sealed class Session() {
+    class GuestSession() : Session()
+    class AuthenticatedSession(
+        val identityId: String,
+        val credentials: Credentials
+    ) : Session()
 
-    data class ValidSession(
-        val accessToken: String,
-        val idToken: String
-    ) : Session(true)
+    data class Credentials(
+        val accessKeyId: String,
+        val secretKey: String,
+        val sessionToken: String
+    )
 }

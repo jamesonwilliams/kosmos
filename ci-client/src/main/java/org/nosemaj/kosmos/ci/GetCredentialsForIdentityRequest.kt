@@ -3,7 +3,7 @@ package org.nosemaj.kosmos.ci
 import org.json.JSONObject
 
 data class GetCredentialsForIdentityRequest(
-    val customRoleArn: String,
+    val customRoleArn: String? = null,
     val identityId: String,
     val logins: Map<String, String>
 ) {

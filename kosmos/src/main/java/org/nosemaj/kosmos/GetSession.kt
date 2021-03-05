@@ -1,50 +1,39 @@
 package org.nosemaj.kosmos
 
-import org.nosemaj.kosmos.Session.InvalidSession
-import org.nosemaj.kosmos.Session.ValidSession
-import org.nosemaj.kosmos.cip.CipClient
-import org.nosemaj.kosmos.cip.InitiateAuthRequest
-import org.nosemaj.kosmos.storage.CredentialStorage
+import org.nosemaj.kosmos.Session.AuthenticatedSession
+import org.nosemaj.kosmos.Session.Credentials
+import org.nosemaj.kosmos.ci.CiClient
+import org.nosemaj.kosmos.ci.GetCredentialsForIdentityRequest
+import org.nosemaj.kosmos.ci.GetIdRequest
 
-internal class GetSession(
-    private val credentialStorage: CredentialStorage,
-    private val cipClient: CipClient,
-    private val clientId: String,
-    private val clientSecret: String
+class GetSession(
+    private val ciClient: CiClient,
+    private val identityPoolId: String,
+    private val userPoolId: String,
+    private val idToken: String
 ) {
-    internal fun execute(): Session {
-        if (credentialStorage.isEmpty()) {
-            return InvalidSession()
-        } else if (credentialStorage.isExpired()) {
-            refresh()
-        }
-        val accessToken = credentialStorage.accessToken()
-        val idToken = credentialStorage.idToken()
-        return ValidSession(accessToken, idToken)
-    }
-
-    private fun refresh() {
-        val refreshToken = credentialStorage.refreshToken()
-        val parameters = mapOf(
-            "REFRESH_TOKEN" to refreshToken,
-            "SECRET_HASH" to clientSecret // Surprising, huh? I was surprised, too, Cognito.
+    fun execute(): Session {
+        val region = identityPoolId.substringBefore(":")
+        val logins = mapOf("cognito-idp.$region.amazonaws.com/$userPoolId" to idToken)
+        val idResponse = ciClient.getId(
+            GetIdRequest(
+                identityPoolId = identityPoolId,
+                logins = logins
+            )
         )
-        val request = InitiateAuthRequest(
-            authFlow = "REFRESH_TOKEN_AUTH",
-            clientId = clientId,
-            authParameters = parameters
+        val credentialsRequest = GetCredentialsForIdentityRequest(
+            identityId = idResponse.identityId,
+            logins = logins
         )
-        val response = cipClient.initiateAuth(request)
-        val authenticationResult = response.authenticationResult!!
-        credentialStorage.clear()
-        if (authenticationResult.refreshToken != null) {
-            credentialStorage.refreshToken(authenticationResult.refreshToken)
-        } else {
-            credentialStorage.refreshToken(refreshToken)
-        }
-        credentialStorage.accessToken(authenticationResult.accessToken)
-        credentialStorage.idToken(authenticationResult.idToken)
-        credentialStorage.expiresIn(authenticationResult.expiresIn)
-        credentialStorage.tokenType(authenticationResult.tokenType)
+        val credentialsResponse = ciClient.getCredentialsForIdentity(credentialsRequest)
+        val credentials = credentialsResponse.credentials
+        return AuthenticatedSession(
+            identityId = credentialsResponse.identityId,
+            credentials = Credentials(
+                accessKeyId = credentials.accessKeyId,
+                secretKey = credentials.secretKey,
+                sessionToken = credentials.sessionToken
+            )
+        )
     }
 }

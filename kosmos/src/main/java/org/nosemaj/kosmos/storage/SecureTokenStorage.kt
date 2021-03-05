@@ -6,13 +6,13 @@ import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKey.KeyScheme
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.ACCESS_TOKEN
-import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.EXPIRATION_EPOCH
-import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.ID_TOKEN
-import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.REFRESH_TOKEN
-import org.nosemaj.kosmos.storage.SecureCredentialStorage.Key.TOKEN_TYPE
+import org.nosemaj.kosmos.storage.SecureTokenStorage.Key.ACCESS_TOKEN
+import org.nosemaj.kosmos.storage.SecureTokenStorage.Key.EXPIRATION_EPOCH
+import org.nosemaj.kosmos.storage.SecureTokenStorage.Key.ID_TOKEN
+import org.nosemaj.kosmos.storage.SecureTokenStorage.Key.REFRESH_TOKEN
+import org.nosemaj.kosmos.storage.SecureTokenStorage.Key.TOKEN_TYPE
 
-class SecureCredentialStorage(context: Context) : CredentialStorage {
+class SecureTokenStorage(context: Context) : TokenStorage {
     private val masterKey = MasterKey.Builder(context, "kosmos")
         .setKeyScheme(KeyScheme.AES256_GCM)
         .build()

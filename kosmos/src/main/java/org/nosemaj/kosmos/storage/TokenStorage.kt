@@ -1,6 +1,6 @@
 package org.nosemaj.kosmos.storage
 
-interface CredentialStorage {
+interface TokenStorage {
 
     fun clear()
 
