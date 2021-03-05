@@ -1,4 +1,4 @@
-package org.nosemaj.ci
+package org.nosemaj.kosmos.ci
 
 import org.nosemaj.aws.AwsClient
 
@@ -14,8 +14,7 @@ class CiClient(region: String = "us-east-1") {
         return GetIdResponse.from(json)
     }
 
-    fun getCredentialsForIdentity(request: GetCredentialsForIdentityRequest):
-        GetCredentialsForIdentityResponse {
+    fun getCredentialsForIdentity(request: GetCredentialsForIdentityRequest): GetCredentialsForIdentityResponse {
             val json = client.post("GetCredentialsForIdentity", request.asJson())
             return GetCredentialsForIdentityResponse.from(json)
         }

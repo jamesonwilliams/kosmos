@@ -1,4 +1,4 @@
-package org.nosemaj.ci
+package org.nosemaj.kosmos.ci
 
 import org.json.JSONObject
 
