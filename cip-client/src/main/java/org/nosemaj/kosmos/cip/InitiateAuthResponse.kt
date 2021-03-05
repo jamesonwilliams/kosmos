@@ -1,6 +1,7 @@
 package org.nosemaj.kosmos.cip
 
 import org.json.JSONObject
+import org.nosemaj.aws.maybeString
 
 data class InitiateAuthResponse(
     val challengeParameters: Map<String, String>?,

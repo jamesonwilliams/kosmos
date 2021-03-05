@@ -1,0 +1,17 @@
+package org.nosemaj.ci
+
+import org.json.JSONObject
+
+data class GetCredentialsForIdentityRequest(
+    val customRoleArn: String,
+    val identityId: String,
+    val logins: Map<String, String>
+) {
+
+    fun asJson(): JSONObject {
+        return JSONObject()
+            .put("CustomRoleArn", customRoleArn)
+            .put("IdentityId", identityId)
+            .put("Logins", JSONObject(logins))
+    }
+}

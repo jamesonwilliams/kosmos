@@ -1,6 +1,7 @@
 package org.nosemaj.kosmos.cip
 
 import org.json.JSONObject
+import org.nosemaj.aws.maybeString
 
 data class RespondToAuthChallengeResponse(
     val authenticationResult: AuthenticationResult,
