@@ -1,4 +1,4 @@
-package org.nosemaj.aws
+package org.nosemaj.kosmos.aws
 
 import org.json.JSONObject
 

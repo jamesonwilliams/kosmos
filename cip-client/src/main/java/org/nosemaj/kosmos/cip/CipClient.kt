@@ -1,7 +1,7 @@
 package org.nosemaj.kosmos.cip
 
 import org.json.JSONObject
-import org.nosemaj.aws.AwsClient
+import org.nosemaj.kosmos.aws.AwsClient
 
 // CIP = Cognito Identity Provider
 class CipClient(region: String = "us-east-1") {

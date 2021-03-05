@@ -1,6 +1,6 @@
 package org.nosemaj.kosmos.ci
 
-import org.nosemaj.aws.AwsClient
+import org.nosemaj.kosmos.aws.AwsClient
 
 // Cognito Identity
 class CiClient(region: String = "us-east-1") {
