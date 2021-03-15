@@ -1,6 +1,3 @@
-include ':aws-client'
-include ':ci-client'
 include ':kosmos'
-include ':cip-client'
 include ':demo-app'
 rootProject.name = "Kosmos"
