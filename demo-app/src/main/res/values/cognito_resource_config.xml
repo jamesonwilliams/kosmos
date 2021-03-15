@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="identity_pool_id">YOUR_IDENTITY_POOL_ID</string>
+    <string name="user_pool_id">YOUR_USER_POOL_ID</string>
+    <string name="client_id">YOUR_APP_CLIENT_ID</string>
+    <string name="client_secret">YOUR_APP_CLIENT_SECRET</string>
+</resources>
