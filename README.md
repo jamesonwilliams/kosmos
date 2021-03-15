@@ -2,23 +2,37 @@
 
 # kosmos
 
-Kosmos is a lightweight Android library to authenticate your users with [Amazon Cognito](https://aws.amazon.com/cognito/).
+Kosmos is a lightweight Android library for authorizing your app's users to access resources in your AWS account.
 
-Amazon Cognito maps your app's user accounts to roles/policies in your AWS account. Registered users can `signIn` to obtain [auth tokens](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html), useful for making authenticated requests to other Amazon services.
+## AWS IAM, Amazon Cognito
 
-Kosmos can help you to register new user accounts, and to authenticate existing accounts. Under the hood, Kosmos handles a number of details on your behalf, including [Secure Remote Password (SRP)](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) exchange, secure token storage, and token refreshes.
+Access to AWS resources is traditionally controlled through [AWS' Identity & Access Management](https://aws.amazon.com/iam/) service.  However, your app's users like to sign-in with their own username and password, not with your organization's IAM credentials. That's one of the problems [Amazon Cognito](https://aws.amazon.com/cognito/) solves.
 
-To register a new user:
+Cognito enables users to register accounts and sign into your app. User accounts are mapped to roles/policies which you define.  Registered users can `signIn(...)` to obtain credentials. Credentials can be [OAuth2 tokens](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html), or temporary IAM credentials, allowing access to specific resources in your account.
+
+## Kosmos' Design
+
+Under the hood, Kosmos includes a few barebones REST clients to communicate with Amazon Cognito endpoints. It also provides a high-level client for performing common application use cases (signin, account registration, etc.)
+
+The library handles a number of low-level details for you, such as exchanging challenges via the [Secure Remote Password (SRP) Protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol), securely storing credentials, and automatically refreshing expired credentials.
+
+## How to Use It
+
+### User registration flow
+
 1. Collect email and password from user, and call `registerUser(...)`.
 2. Amazon Cognito will send a verification email to the user.
-3. Collect the verification code in your UI, and call `confirmRegistration(...)`.
-4. If the code matches, the user can proceed to sign in.
+3. Prompt the user to enter the verification code in your UI, and pass it to `confirmRegistration(...)`.
+4. If the code matches, registration succeeds and the user can proceed to sign in.
 
-To sign in, simply call `signIn(...)`. Once a user has signed in, they can access credentials through `session()`. A `ValidSession` contains an OIDC ID token and an OAuth2 access token.
+### Signing in
+To sign in, simply call `signIn(...)`.
+
+Once a user has signed in, OAuth tokens are available through `tokens()`. A `ValidTokens` instance contains an OIDC ID token and an OAuth2 access token. Session-scoped AWS credentials are _also_ available, through `session()`. An `AuthenticatedSession` will contain an AWS IAM access key, secret key, and session token. (Under the hood, Cognito has called `AssumeRole`, to temporarily use one of the roles you've defined.)
 
 ## Demo App
 
-Checkout the [demo app](./demo-app).
+Be sure to checkout the [demo app](./demo-app).
 
 It shows user sign-up:
 
