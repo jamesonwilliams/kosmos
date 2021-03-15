@@ -4,7 +4,6 @@
     <string name="password_hint_text">F5%2r9!</string><!-- Not real, just example! -->
     <string name="email_hint_text">username@gmail.com</string>
     <string name="username_hint_text">username</string>
-    <string name="confirming_sign_up">Confirming sign up…</string>
     <string name="enter_code">Enter code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_in">Sign in</string>

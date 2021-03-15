@@ -11,6 +11,7 @@ import org.nosemaj.kosmos.cip.CipClient
 import org.nosemaj.kosmos.storage.SecureTokenStorage
 import org.nosemaj.kosmos.storage.TokenStorage
 
+@Suppress("MemberVisibilityCanBePrivate") // It's a public API.
 class Auth(
     context: Context,
     private val identityPoolId: String,
@@ -46,7 +47,7 @@ class Auth(
                 ciClient = ciClient,
                 identityPoolId = identityPoolId,
                 userPoolId = userPoolId,
-                idToken = (tokens() as ValidTokens).idToken
+                idToken = tokens.idToken
             ).execute()
         }
     }

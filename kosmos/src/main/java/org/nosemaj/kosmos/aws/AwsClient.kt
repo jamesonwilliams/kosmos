@@ -30,7 +30,7 @@ class AwsClient(private val serviceId: String, private val endpoint: String) {
         if (conn.responseCode < 200 || conn.responseCode > 399) {
             val value = readStream(conn.errorStream)
             Log.i("Error", value)
-            throw ResponseError(conn.responseCode, value)
+            throw ResponseError(value)
         } else {
             val foo = JSONObject(readStream(conn.inputStream))
             Log.i("Response", foo.toString(2))
@@ -49,5 +49,7 @@ class AwsClient(private val serviceId: String, private val endpoint: String) {
         return response.toString()
     }
 
-    class ResponseError(code: Int, message: String) : Exception(message)
+    // TODO: buff up this error class 💪
+    // Sealed class with status codes, etc.?
+    class ResponseError(message: String) : Exception(message)
 }

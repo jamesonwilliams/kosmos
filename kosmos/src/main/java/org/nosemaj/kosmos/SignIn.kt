@@ -44,7 +44,7 @@ class SignIn(
 
         if (!response.hasChallengeParameters) {
             if (response.authenticationResult != null) {
-                storeCredentials(response.authenticationResult!!)
+                storeCredentials(response.authenticationResult)
             }
         } else when (response.challengeName) {
             "PASSWORD_VERIFIER" -> verifyPassword(password, response)
