@@ -76,6 +76,7 @@ When it does, prompt the user to enter the verification code in your UI, and pas
 lifecycleScope.launch(Dispatchers.IO) {
     auth.confirmSignIn(username, code)
 }
+```
 
 If the code matches, registration succeeds and the user can proceed to sign in.
 
