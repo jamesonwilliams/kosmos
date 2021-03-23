@@ -11,7 +11,7 @@ import org.json.JSONObject
 
 class AwsClient(private val serviceId: String, private val endpoint: String) {
     fun post(action: String, json: JSONObject): JSONObject {
-        val input = json.toString().toByteArray()
+        val input = json.toString().encodeToByteArray()
         Log.i("REQUEST", json.toString(2))
 
         val url = URL(endpoint)

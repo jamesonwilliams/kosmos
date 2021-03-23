@@ -20,7 +20,7 @@ class RegisterUser(
             password = password,
             clientId = clientId,
             secretHash = Companion.of(username, clientId, clientSecret),
-            userAttributes = attributes.map { Pair(it.key, it.value) }
+            userAttributes = attributes
         )
         val response = cipClient.signUp(request)
         return if (!response.userConfirmed) {
