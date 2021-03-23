@@ -74,6 +74,6 @@ class Auth(
     }
 
     suspend fun signOut() = withContext(Dispatchers.IO) {
-        return@withContext SignOut(cipClient, tokenStorage).execute()
+        return@withContext SignOut(cipClient, tokenStorage, clientId, clientSecret).execute()
     }
 }
