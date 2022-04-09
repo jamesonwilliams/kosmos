@@ -24,6 +24,15 @@ class CipClient(region: String = "us-east-1") {
         return InitiateAuthResponse.from(json)
     }
 
+    fun revokeToken(request: RevokeTokenRequest) {
+        client.post("RevokeToken", request.asJson())
+    }
+
+    fun introspectToken(request: IntrospectTokenRequest): IntrospectTokenResponse {
+        val json = client.post("IntrospectToken", request.asJson())
+        return IntrospectTokenResponse.from(json)
+    }
+
     fun globalSignOut(accessToken: String) {
         val requestBody = JSONObject().put("AccessToken", accessToken)
         client.post("GlobalSignOut", requestBody)
